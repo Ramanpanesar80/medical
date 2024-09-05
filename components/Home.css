@@ -1,0 +1,52 @@
+/* Home.css */
+
+/* Container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative; /* Allows positioning of the pseudo-element */
+    z-index: 1; /* Ensure content is above the background image */
+}
+
+/* Add a full-size background image to the body or a parent element */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Ensure proper font rendering */
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/src/home.jpg'); 
+    background-size: cover; /* Ensure the image covers the entire viewport */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    z-index: -1; /* Place the image behind the content */
+}
+
+/* Center text alignment */
+.text-center {
+    text-align: center;
+}
+
+/* Spacing class */
+.mt-5 {
+    margin-top: 3rem; /* Adjust spacing as needed */
+}
+
+.mt-3 {
+    margin-top: 1.5rem; /* Adjust spacing as needed */
+}
+
+/* Header styling */
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,76 @@
+/* BookingPage.css */
+
+/* Container for the page */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header styling */
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Optional spacing between sections */
+  .mt-4 {
+    margin-top: 1.5rem; /* Adjust spacing as needed */
+  }
+  
+  /* Styling for the AppointmentForm */
+  form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  form h2 {
+    font-size: 1.75rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  form p {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+  
+  form input[type="date"],
+  form input[type="time"],
+  form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  form button:hover {
+    background-color: #0056b3;
+  }
+  
+  form button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5);
+  }
+  
