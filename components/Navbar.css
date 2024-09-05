@@ -1,32 +1,72 @@
+/* Navbar.css */
+
+/* General styling for the navbar */
 .navbar {
-    background-color: #333;
-    padding: 1rem;
+  background-color: #333;
+  width: 100%; /* Full viewport width */
+  height: 60px; /* Adjust height as needed */
+  position: fixed; /* Fixed position to stick at the top */
+  top: 0;
+  left: 0;
+  padding: 0 1rem; /* Padding on the left and right */
+  display: flex;
+  align-items: center; /* Center items vertically */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+  z-index: 1000; /* Ensure the navbar stays on top */
+}
+
+/* Styling for the navbar list */
+.navbar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around; /* Distribute items evenly */
+  width: 100%; /* Full width */
+}
+
+/* Styling for each item in the navbar list */
+.navbar-item {
+  margin: 0;
+}
+
+/* Styling for each link in the navbar */
+.navbar-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem; /* Adjust font size */
+  padding: 0.75rem 1rem;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for the links */
+.navbar-link:hover {
+  background-color: #575757;
+  color: #ddd;
+}
+
+/* Active link styling */
+.navbar-link.active {
+  background-color: #04AA6D;
+  color: #fff;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .navbar {
+    height: auto; /* Height will adjust based on content */
+    padding: 0.5rem 1rem; /* Adjust padding for smaller screens */
   }
   
   .navbar-list {
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-    margin: 0;
-    padding: 0;
+    flex-direction: row; /* Stack items horizontally on smaller screens */
+    justify-content: flex-start; /* Align items to the start */
+    flex-wrap: wrap; /* Allow wrapping */
   }
-  
-  .navbar-item {
-    margin: 0;
-  }
-  
+
   .navbar-link {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
+    padding: 0.5rem 1rem; /* Adjust padding for smaller screens */
+    font-size: 0.9rem; /* Adjust font size */
   }
-  
-  .navbar-link:hover {
-    color: #ddd;
-  }
-  
-  .navbar-link.active {
-    color: #04AA6D; /* Indicating the active page */
-  }
-  
+}
