@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { db } from './firebase'; // Import Firestore instance
+import { collection, addDoc } from 'firebase/firestore'; // For adding data to Firestore
 
 const AppointmentForm = () => {
   const [date, setDate] = useState('');
@@ -24,17 +26,28 @@ const AppointmentForm = () => {
 
     setLoading(true);
 
-    // Simulate a network request with setTimeout
-    setTimeout(() => {
-      setLoading(false);
+    const appointmentData = {
+      date: date,
+      time: time,
+      doctor: doctor,
+      createdAt: new Date(),
+    };
+
+    try {
+      // Save appointment data to Firestore
+      await addDoc(collection(db, 'appointments'), appointmentData);
       setSuccess('Appointment booked successfully!');
-      console.log('Appointment booked successfully:', { date, time, doctor });
+      console.log('Appointment booked successfully:', appointmentData);
 
       // Optionally, reset the form fields
       setDate('');
       setTime('');
       setDoctor('');
-    }, 2000); // Simulate a 2-second delay
+    } catch (error) {
+      setError(`Error adding document: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
