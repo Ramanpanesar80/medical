@@ -1,59 +1,70 @@
 import React, { useState } from 'react';
+import { auth } from './firebase'; // Import Firebase Auth
+import { signInWithEmailAndPassword } from 'firebase/auth'; // Import necessary Firebase Auth function
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+    setSuccess('');
 
-    // Basic client-side validation
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address.');
-      setLoading(false);
-      return;
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setSuccess('Signed in successfully!');
+      console.log('Signed in user:', userCredential.user);
+      // Optionally, redirect to a dashboard or reset form fields
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      setError(`Sign-in failed: ${error.message}`);
     }
-
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
-      setLoading(false);
-      return;
-    }
-
-    // Simulate sign-in logic (replace with actual API call)
-    setTimeout(() => {
-      setLoading(false);
-      console.log('Signed in with:', email, password);
-      // Redirect to another page or show success message
-    }, 1000);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signin-form">
-      <h2>Sign In</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? 'Signing In...' : 'Sign In'}
-      </button>
-    </form>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h2 className="text-center mb-4">Sign In</h2>
+
+          {/* Display error and success messages */}
+          {error && <div className="alert alert-danger">{error}</div>}
+          {success && <div className="alert alert-success">{success}</div>}
+
+          <form onSubmit={handleSignIn}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary w-100">Sign In</button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
