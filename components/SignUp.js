@@ -1,59 +1,90 @@
 import React, { useState } from 'react';
+import { auth } from './firebase'; // Import Firebase Auth
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase Auth function
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+    setSuccess('');
 
-    // Basic validation
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address.');
-      setLoading(false);
+    // Password confirmation check
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
       return;
     }
 
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long.');
-      setLoading(false);
-      return;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      setSuccess('User signed up successfully!');
+      console.log('Signed up user:', userCredential.user);
+      // Optionally reset form fields
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+    } catch (error) {
+      setError(`Sign-up failed: ${error.message}`);
     }
-
-    // Simulate sign-up logic (replace with actual API call)
-    setTimeout(() => {
-      setLoading(false);
-      console.log('Registered with:', email, password);
-      // Redirect to sign-in page or another page
-    }, 1000);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signup-form">
-      <h2>Sign Up</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? 'Signing Up...' : 'Sign Up'}
-      </button>
-    </form>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h2 className="text-center mb-4">Sign Up</h2>
+
+          {/* Display error and success messages */}
+          {error && <div className="alert alert-danger">{error}</div>}
+          {success && <div className="alert alert-success">{success}</div>}
+
+          <form onSubmit={handleSignUp}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
